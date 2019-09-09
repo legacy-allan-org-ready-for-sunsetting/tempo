@@ -4,3 +4,9 @@
 [submodule "bam_preprocessing/base_recalibration"]
 	path = bam_preprocessing/base_recalibration
 	url = https://github.com/mskcc-cwl/base_recalibration
+[submodule "bam_preprocessing/qc/command_line_tools/fastp_0.19.7"]
+	path = bam_preprocessing/qc/command_line_tools/fastp_0.19.7
+	url = https://github.com/mskcc-cwl/fastp_0.19.7
+[submodule "bam_preprocessing/qc/command_line_tools/alfred_0.1.17"]
+	path = bam_preprocessing/qc/command_line_tools/alfred_0.1.17
+	url = https://github.com/mskcc-cwl/alfred_0.1.17

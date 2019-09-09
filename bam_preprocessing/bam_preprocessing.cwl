@@ -28,6 +28,14 @@ inputs:
     secondaryFiles:
       - .idx
 outputs:
+  - id: fastp_html
+    outputSource:
+      - fastp/html_output
+    type: File[]
+  - id: fastp_json
+    outputSource:
+      - fastp/json_output
+    type: File[]
   - id: output_md_bam
     outputSource:
       - align_sample/output_md_bam
@@ -37,6 +45,35 @@ outputs:
       - base_recalibration/output_bam
     type: File
 steps:
+  - id: fastp
+    in:
+      - id: in1
+        source:
+          - r1
+      - id: in2
+        source:
+          - r2
+      - id: lane_id
+        source:
+          - lane_id
+      - id: sample_id
+        source:
+          - sample_id
+      - id: output_prefix
+        valueFrom: $(inputs.sample_id + "_" + inputs.lane_id)
+      - id: html
+        valueFrom: $(inputs.output_prefix + ".html")
+      - id: json
+        valueFrom: $(inputs.output_prefix + ".json")
+    out:
+      - id: html_output
+      - id: json_output
+    scatter:
+      - in1
+      - in2
+      - lane_id
+    scatterMethod: dotproduct
+    run: qc/command_line_tools/fastp_0.19.7/fastp.cwl
   - id: align_sample
     in:
       - id: reference_sequence

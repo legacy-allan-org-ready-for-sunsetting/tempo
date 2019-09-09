@@ -1,6 +1,9 @@
 # TEMPO
 
-Set of CWLs used by TEMPO (currently in development)
+Set of CWLs used by TEMPO (currently in development).
+
+What's in:
+- Generates a base-recalibrated BAM for one sample
 
 ```
 inputs:

@@ -1,0 +1,6 @@
+[submodule "bam_preprocessing/align_sample"]
+	path = bam_preprocessing/align_sample
+	url = https://github.com/mskcc-cwl/align_sample
+[submodule "bam_preprocessing/base_recalibration"]
+	path = bam_preprocessing/base_recalibration
+	url = https://github.com/mskcc-cwl/base_recalibration

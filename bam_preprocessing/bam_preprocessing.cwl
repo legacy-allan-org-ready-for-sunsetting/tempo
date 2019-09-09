@@ -34,7 +34,7 @@ outputs:
     type: File
   - id: output_bam
     outputSource:
-      - gatk_apply_bqsr/output
+      - base_recalibration/output
     type: File
 steps:
   - id: align_sample

@@ -1,7 +1,7 @@
 class: Workflow
 cwlVersion: v1.0
-id: align_sample
-label: align_sample
+id: bam_preprocessing
+label: bam_preprocessing
 inputs:
   - id: reference_sequence
     type: File
@@ -34,7 +34,7 @@ outputs:
     type: File
   - id: output_bam
     outputSource:
-      - base_recalibration/output
+      - base_recalibration/output_bam
     type: File
 steps:
   - id: align_sample
@@ -59,7 +59,7 @@ steps:
     run: align_sample/align_sample.cwl
   - id: base_recalibration
     in:
-      - id: reference
+      - id: reference_sequence
         source:
           - reference_sequence
       - id: bam

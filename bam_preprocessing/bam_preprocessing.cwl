@@ -60,16 +60,17 @@ steps:
   - id: base_recalibration
     in:
       - id: reference
-      source:
-        - reference_sequence
+        source:
+          - reference_sequence
       - id: bam
-      source:
-        - align_sample/output_md_bam
+        source:
+          - align_sample/output_md_bam
       - id: known_sites
-      source:
-        - known_sites
+        source:
+          - known_sites
     out:
       - id: output_bam
+    run: base_recalibration/base_recalibrate.cwl
 requirements:
   - class: SubworkflowFeatureRequirement
   - class: ScatterFeatureRequirement

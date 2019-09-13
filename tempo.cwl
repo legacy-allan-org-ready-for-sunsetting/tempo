@@ -60,7 +60,36 @@ outputs:
   normal_bam:
     type: File
     outputSource: make_bams/normal_bam
+
+  fastp_html:
+    type: File[]
+    outputSource: run_qc_fastqs/fastp_html
+  fastp_json:
+    type: File[]
+    outputSource: run_qc_fastqs/fastp_json
+
+#  fastp_html:
+#    type: Directory
+#    outputSource: qc_output/fastp_dir_html
+#  fastp_json:
+#    type: Directory
+#    outputSource: qc_output/fastp_dir_json
+
 steps:
+  # combines R1s and R2s from both tumor and normal samples
+  run_qc_fastqs:
+    in:
+      tumor_sample: tumor_sample
+      normal_sample: normal_sample
+      r1:
+        valueFrom: ${ var data = []; data = inputs.tumor_sample.R1.concat(inputs.normal_sample.R1); return data }
+      r2:
+        valueFrom: ${ var data = []; data = inputs.tumor_sample.R2.concat(inputs.normal_sample.R2); return data }
+      output_prefix:
+        valueFrom: ${ var data = []; data = inputs.tumor_sample.RG_ID.concat(inputs.normal_sample.RG_ID); return data }
+    out: [ fastp_html, fastp_json ]
+    run: qc_fastqs/scatter_fastqs_for_qc.cwl
+  
   make_bams:
     in:
       tumor_sample: tumor_sample

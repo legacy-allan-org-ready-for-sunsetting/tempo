@@ -1,0 +1,3 @@
+[submodule "preprocess_tumor_normal_bam"]
+	path = preprocess_tumor_normal_bam
+	url = https://github.com/mskcc-cwl/preprocess_tumor_normal_bam

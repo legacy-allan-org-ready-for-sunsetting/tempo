@@ -3,7 +3,7 @@ cwlVersion: v1.0
 id: tempo
 label: tempo
 inputs:
-  - id: reference_sequence
+  reference_sequence:
     type: File
     secondaryFiles:
       - .amb
@@ -13,49 +13,63 @@ inputs:
       - .sa
       - .fai
       - ^.dict
-  - id: r1
-    type: 'File[]'
-  - id: r2
-    type: 'File[]'
-  - id: sample_id
-    type: string
-  - id: lane_id
-    type: 'string[]'
-  - id: known_sites
+
+  tumor_sample:
+    type:
+      type: record
+      fields:
+        ID: string
+        CN: string
+        LB: string
+        PL: string
+        PU: string[]
+        R1: File[]
+        R2: File[]
+        RG_ID: string[]
+        adapter: string
+        adapter2: string
+        bwa_output: string
+
+  normal_sample:
+    type: 
+      type: record
+      fields:
+        ID: string
+        CN: string
+        LB: string
+        PL: string
+        PU: string[]
+        R1: File[]
+        R2: File[]
+        RG_ID: string[]
+        adapter: string
+        adapter2: string
+        bwa_output: string
+
+  known_sites:
     type:
       type: array
       items: File
     secondaryFiles:
       - .idx
+
 outputs:
-  - id: output_bam
-    outputSource:
-      - bam_preprocessing/output_bam
+  tumor_bam:
     type: File
+    outputSource: make_bams/tumor_bam
+  normal_bam:
+    type: File
+    outputSource: make_bams/normal_bam
 steps:
-  - id: bam_preprocessing
+  make_bams:
     in:
-      - id: reference_sequence
-        source:
-          - reference_sequence
-      - id: r1
-        source:
-          - r1
-      - id: r2
-        source:
-          - r2 
-      - id: sample_id
-        source:
-          - sample_id
-      - id: lane_id
-        source:
-          - lane_id
-      - id: known_sites
-        source:
-          - known_sites
-    out:
-      - id: output_bam
-    run: bam_preprocessing/bam_preprocessing.cwl
+      tumor_sample: tumor_sample
+      normal_sample: normal_sample
+      reference_sequence: reference_sequence
+      known_sites: known_sites
+    out: [ tumor_bam, normal_bam ]
+    run: preprocess_tumor_normal_bam/preprocess_tumor_normal_pair.cwl
+
 requirements:
   - class: SubworkflowFeatureRequirement
   - class: ScatterFeatureRequirement

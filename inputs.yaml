@@ -54,5 +54,10 @@
                         'RG_ID': ['foo_tumor_1-foo_tumorPE'],
                         'adapter': 'AGATCGGAAGAGCACACGTCTGAACTCCAGTCACATGAGCATCTCGTATGCCGTCTTCTGCTTG',
                         'adapter2': 'AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGTAGATCTCGGTGGTCGCCGTATCATT',
-                        'bwa_output': 'foo_tumor.bam'}
+                        'bwa_output': 'foo_tumor.bam'},
+    'bed': {'class': 'File',
+             'path': '/path/to/optional/bed.file',
+             'secondaryFiles': [ { 'class': 'File',
+                                   'path': '/path/to/optional/bed.file.tbi' }
+             }
 }

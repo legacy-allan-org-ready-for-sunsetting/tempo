@@ -53,6 +53,11 @@ inputs:
     secondaryFiles:
       - .idx
 
+  target_bed:
+    type: File?
+    secondaryFiles:
+      - .tbi
+
 outputs:
   tumor_bam:
     type: File
@@ -74,6 +79,23 @@ outputs:
 #  fastp_json:
 #    type: Directory
 #    outputSource: qc_output/fastp_dir_json
+
+  bam_qc_alfred_rg:
+    type: File[]?
+    outputSource: run_alfred/bam_qc_alfred_rg
+
+  bam_qc_alfred_ignore_rg:
+    type: File[]?
+    outputSource: run_alfred/bam_qc_alfred_ignore_rg
+
+  bam_qc_alfred_rg_pdf:
+    type: File[]?
+    outputSource: run_alfred/bam_qc_alfred_rg_pdf
+
+  bam_qc_alfred_ignore_rg_pdf:
+    type: File[]?
+    outputSource: run_alfred/bam_qc_alfred_ignore_rg_pdf
+
 
 steps:
   # combines R1s and R2s from both tumor and normal samples
@@ -98,6 +120,18 @@ steps:
       known_sites: known_sites
     out: [ tumor_bam, normal_bam ]
     run: preprocess_tumor_normal_bam/preprocess_tumor_normal_pair.cwl
+
+  run_alfred:
+    in:
+      bam:
+        source: [ make_bams/tumor_bam, make_bams/normal_bam ]
+        linkMerge: merge_flattened
+      bed: target_bed
+      reference_sequence: reference_sequence
+    out: [ bam_qc_alfred_rg, bam_qc_alfred_ignore_rg, bam_qc_alfred_rg_pdf, bam_qc_alfred_ignore_rg_pdf ]
+    run: qc_bams/run_alfred.cwl
+    scatter: [ bam ]
+    scatterMethod: dotproduct
 
 requirements:
   - class: SubworkflowFeatureRequirement

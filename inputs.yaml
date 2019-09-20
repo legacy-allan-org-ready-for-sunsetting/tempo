@@ -1,4 +1,10 @@
 {
+    'targets_bed': { 'class': 'File',
+                     'path': '/path/to/optional/file.bed.gz',
+                     'secondaryFiles': [ { 'class': 'File',
+                                           'path':'/path/to/optional/file.bed.gz.tbi'
+                                       } ]
+                   },
     'known_sites': [   {   'class': 'File',
                            'path': '/path/to/known_sites.1.vcf',
                            'secondaryFiles': [   {   'class': 'File',

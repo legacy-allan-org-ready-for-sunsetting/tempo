@@ -4,3 +4,6 @@
 [submodule "qc_fastqs"]
 	path = qc_fastqs
 	url = https://github.com/mskcc-cwl/qc_fastqs
+[submodule "qc_bams"]
+	path = qc_bams
+	url = https://github.com/mskcc-cwl/qc_bams.git

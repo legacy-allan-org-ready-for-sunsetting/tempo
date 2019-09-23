@@ -58,6 +58,11 @@ inputs:
     secondaryFiles:
       - .tbi
 
+  facets_vcf:
+    type: File
+    secondaryFiles:
+      - .gz
+
   facets_params:
     type:
       type: record

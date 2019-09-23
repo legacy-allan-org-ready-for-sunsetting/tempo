@@ -62,9 +62,13 @@ outputs:
   tumor_bam:
     type: File
     outputSource: make_bams/tumor_bam
+    secondaryFiles:
+      - ^.bai
   normal_bam:
     type: File
     outputSource: make_bams/normal_bam
+    secondaryFiles:
+      - ^.bai
 
   fastp_html:
     type: File[]

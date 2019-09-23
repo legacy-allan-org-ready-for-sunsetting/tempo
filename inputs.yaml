@@ -71,6 +71,7 @@
                          'cval': 100,
                          'snp_nbhd': 250,
                          'ndepth': 25,
+                         'min_nhet': 25,
                          'purity_cval': 500,
                          'purity_snp_nbhd': 250,
                          'purity_ndepth': 35,

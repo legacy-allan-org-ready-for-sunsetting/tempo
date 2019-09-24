@@ -101,7 +101,7 @@ outputs:
 
   dir_somatic:
     type: Directory
-    outputSource: run_somatic/directory
+    outputSource: run_somatic/dir_somatic
 
 steps:
   # combines R1s and R2s from both tumor and normal samples
@@ -124,7 +124,7 @@ steps:
       tumor_id: 
         valueFrom: $(inputs.tumor_sample.ID)
       facets_params: facets_params
-    out: [ directory ]
+    out: [ dir_somatic ]
     run: tempo_somatic/run_somatic.cwl 
 
 requirements:

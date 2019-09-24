@@ -55,9 +55,42 @@
                         'adapter': 'AGATCGGAAGAGCACACGTCTGAACTCCAGTCACATGAGCATCTCGTATGCCGTCTTCTGCTTG',
                         'adapter2': 'AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGTAGATCTCGGTGGTCGCCGTATCATT',
                         'bwa_output': 'foo_tumor.bam'},
-    'bed': {'class': 'File',
+    'target_bed': {'class': 'File',
              'path': '/path/to/optional/bed.file',
              'secondaryFiles': [ { 'class': 'File',
                                    'path': '/path/to/optional/bed.file.tbi' }
-             }
+             },
+    'facets_params': {   'pseudo_snps': 50,
+                         'count_orphans': true,
+                         'gzip': true,
+                         'ignore_overlaps': false,
+                         'max_depth': 4000,
+                         'min_base_quality': 0,
+                         'min_read_counts': 0,
+                         'min_map_quality': 0,
+                         'cval': 100,
+                         'snp_nbhd': 250,
+                         'ndepth': 25,
+                         'min_nhet': 25,
+                         'purity_cval': 500,
+                         'purity_snp_nbhd': 250,
+                         'purity_ndepth': 35,
+                         'purity_min_nhet': 25,
+                         'genome': 'hg19',
+                         'directory': '.',
+                         'R_lib': '/usr/lib/R/library',
+                         'single_chrom': 'F',
+                         'ggplot2': 'T',
+                         'seed': 100
+                     },
+    'facets_vcf': {
+      'class': 'File',
+      'path': '/ifs/depot/pi/resources/genomes/GRCh37/facets_snps/dbsnp_137.b37__RmDupsClean__plusPseudo50__DROP_SORT.vcf',
+      'secondaryFiles': [
+          {
+            'class': 'File',
+            'path': '/ifs/depot/pi/resources/genomes/GRCh37/facets_snps/dbsnp_137.b37__RmDupsClean__plusPseudo50__DROP_SORT.vcf.gz'
+        }
+        ]
+      }
 }

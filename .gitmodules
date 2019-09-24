@@ -1,12 +1,3 @@
-[submodule "preprocess_tumor_normal_bam"]
-	path = preprocess_tumor_normal_bam
-	url = https://github.com/mskcc-cwl/preprocess_tumor_normal_bam
-[submodule "qc_fastqs"]
-	path = qc_fastqs
-	url = https://github.com/mskcc-cwl/qc_fastqs
-[submodule "qc_bams"]
-	path = qc_bams
-	url = https://github.com/mskcc-cwl/qc_bams.git
 [submodule "tempo_somatic"]
 	path = tempo_somatic
 	url = https://github.com/mskcc-cwl/tempo_somatic

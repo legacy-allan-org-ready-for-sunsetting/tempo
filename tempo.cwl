@@ -90,6 +90,12 @@ inputs:
         ggplot2: string
         seed: int
 
+  targets_list:
+    type: File[]
+
+  baits_list:
+    type: File[]
+
 outputs:
   dir_bams:
     type: Directory
@@ -112,6 +118,8 @@ steps:
       normal_sample: normal_sample
       known_sites: known_sites
       target_bed: target_bed
+      targets_list: targets_list
+      baits_list: baits_list
     out: [ tumor_bam, normal_bam, dir_qc, dir_bams ]
     run: tempo_make_bam_and_qc/make_bam_and_qc.cwl
 

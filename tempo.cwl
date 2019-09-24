@@ -93,21 +93,21 @@ inputs:
 outputs:
   tumor_bam:
     type: File
-    outputSource: make_bams/tumor_bam
+    outputSource: run_make_bams_and_qc/tumor_bam
     secondaryFiles:
       - ^.bai
   normal_bam:
     type: File
-    outputSource: make_bams/normal_bam
+    outputSource: run_make_bams_and_qc/normal_bam
     secondaryFiles:
       - ^.bai
 
   fastp_html:
     type: File[]
-    outputSource: run_qc_fastqs/fastp_html
+    outputSource: run_make_bams_and_qc/fastp_html
   fastp_json:
     type: File[]
-    outputSource: run_qc_fastqs/fastp_json
+    outputSource: run_make_bams_and_qc/fastp_json
 
 #  fastp_html:
 #    type: Directory
@@ -118,19 +118,19 @@ outputs:
 
   bam_qc_alfred_rg:
     type: File[]?
-    outputSource: run_alfred/bam_qc_alfred_rg
+    outputSource: run_make_bams_and_qc/bam_qc_alfred_rg
 
   bam_qc_alfred_ignore_rg:
     type: File[]?
-    outputSource: run_alfred/bam_qc_alfred_ignore_rg
+    outputSource: run_make_bams_and_qc/bam_qc_alfred_ignore_rg
 
   bam_qc_alfred_rg_pdf:
     type: File[]?
-    outputSource: run_alfred/bam_qc_alfred_rg_pdf
+    outputSource: run_make_bams_and_qc/bam_qc_alfred_rg_pdf
 
   bam_qc_alfred_ignore_rg_pdf:
     type: File[]?
-    outputSource: run_alfred/bam_qc_alfred_ignore_rg_pdf
+    outputSource: run_make_bams_and_qc/bam_qc_alfred_ignore_rg_pdf
 
   facets_png:
     type: File[]?
@@ -158,44 +158,20 @@ outputs:
 
 steps:
   # combines R1s and R2s from both tumor and normal samples
-  run_qc_fastqs:
+  run_make_bams_and_qc:
     in:
-      tumor_sample: tumor_sample
-      normal_sample: normal_sample
-      r1:
-        valueFrom: ${ var data = []; data = inputs.tumor_sample.R1.concat(inputs.normal_sample.R1); return data }
-      r2:
-        valueFrom: ${ var data = []; data = inputs.tumor_sample.R2.concat(inputs.normal_sample.R2); return data }
-      output_prefix:
-        valueFrom: ${ var data = []; data = inputs.tumor_sample.RG_ID.concat(inputs.normal_sample.RG_ID); return data }
-    out: [ fastp_html, fastp_json ]
-    run: qc_fastqs/scatter_fastqs_for_qc.cwl
-  
-  make_bams:
-    in:
-      tumor_sample: tumor_sample
-      normal_sample: normal_sample
       reference_sequence: reference_sequence
+      tumor_sample: tumor_sample
+      normal_sample: normal_sample
       known_sites: known_sites
-    out: [ tumor_bam, normal_bam ]
-    run: preprocess_tumor_normal_bam/preprocess_tumor_normal_pair.cwl
-
-  run_alfred:
-    in:
-      bam:
-        source: [ make_bams/tumor_bam, make_bams/normal_bam ]
-        linkMerge: merge_flattened
-      bed: target_bed
-      reference_sequence: reference_sequence
-    out: [ bam_qc_alfred_rg, bam_qc_alfred_ignore_rg, bam_qc_alfred_rg_pdf, bam_qc_alfred_ignore_rg_pdf ]
-    run: qc_bams/run_alfred.cwl
-    scatter: [ bam ]
-    scatterMethod: dotproduct
+      target_bed: target_bed
+    out: [ tumor_bam, normal_bam, fastp_html, fastp_json, bam_qc_alfred_rg, bam_qc_alfred_ignore_rg, bam_qc_alfred_rg_pdf, bam_qc_alfred_ignore_rg_pdf ]
+    run: tempo_make_bam_and_qc/make_bam_and_qc.cwl
 
   run_somatic:
     in:
-      tumor_bam: make_bams/tumor_bam
-      normal_bam: make_bams/normal_bam
+      tumor_bam: run_make_bams_and_qc/tumor_bam
+      normal_bam: run_make_bams_and_qc/normal_bam
       facets_vcf: facets_vcf
       tumor_sample: tumor_sample
       tumor_id: 

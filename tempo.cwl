@@ -91,70 +91,17 @@ inputs:
         seed: int
 
 outputs:
-  tumor_bam:
-    type: File
-    outputSource: run_make_bams_and_qc/tumor_bam
-    secondaryFiles:
-      - ^.bai
-  normal_bam:
-    type: File
-    outputSource: run_make_bams_and_qc/normal_bam
-    secondaryFiles:
-      - ^.bai
+  dir_bams:
+    type: Directory
+    outputSource: run_make_bams_and_qc/dir_bams
 
-  fastp_html:
-    type: File[]
-    outputSource: run_make_bams_and_qc/fastp_html
-  fastp_json:
-    type: File[]
-    outputSource: run_make_bams_and_qc/fastp_json
+  dir_qc:
+    type: Directory
+    outputSource: run_make_bams_and_qc/dir_qc
 
-#  fastp_html:
-#    type: Directory
-#    outputSource: qc_output/fastp_dir_html
-#  fastp_json:
-#    type: Directory
-#    outputSource: qc_output/fastp_dir_json
-
-  bam_qc_alfred_rg:
-    type: File[]?
-    outputSource: run_make_bams_and_qc/bam_qc_alfred_rg
-
-  bam_qc_alfred_ignore_rg:
-    type: File[]?
-    outputSource: run_make_bams_and_qc/bam_qc_alfred_ignore_rg
-
-  bam_qc_alfred_rg_pdf:
-    type: File[]?
-    outputSource: run_make_bams_and_qc/bam_qc_alfred_rg_pdf
-
-  bam_qc_alfred_ignore_rg_pdf:
-    type: File[]?
-    outputSource: run_make_bams_and_qc/bam_qc_alfred_ignore_rg_pdf
-
-  facets_png:
-    type: File[]?
-    outputSource: run_somatic/facets_png
-
-  facets_txt_purity:
-    type: File?
-    outputSource: run_somatic/facets_txt_purity
-
-  facets_txt_hisens:
-    type: File?
-    outputSource: run_somatic/facets_txt_hisens
-
-  facets_out_files:
-    type: File[]?
-    outputSource: run_somatic/facets_out_files
-
-  facets_rdata:
-    type: File[]?
-    outputSource: run_somatic/facets_rdata
-
-  facets_seg:
-    type: File[]?
-    outputSource: run_somatic/facets_seg
+  dir_somatic:
+    type: Directory
+    outputSource: run_somatic/directory
 
 steps:
   # combines R1s and R2s from both tumor and normal samples
@@ -165,7 +112,7 @@ steps:
       normal_sample: normal_sample
       known_sites: known_sites
       target_bed: target_bed
-    out: [ tumor_bam, normal_bam, fastp_html, fastp_json, bam_qc_alfred_rg, bam_qc_alfred_ignore_rg, bam_qc_alfred_rg_pdf, bam_qc_alfred_ignore_rg_pdf ]
+    out: [ tumor_bam, normal_bam, dir_qc, dir_bams ]
     run: tempo_make_bam_and_qc/make_bam_and_qc.cwl
 
   run_somatic:
@@ -177,7 +124,7 @@ steps:
       tumor_id: 
         valueFrom: $(inputs.tumor_sample.ID)
       facets_params: facets_params
-    out: [ facets_out_files, facets_png, facets_rdata, facets_seg, facets_txt_hisens, facets_txt_purity ]
+    out: [ directory ]
     run: tempo_somatic/run_somatic.cwl 
 
 requirements:

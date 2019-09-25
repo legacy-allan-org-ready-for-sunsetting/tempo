@@ -91,10 +91,10 @@ inputs:
         seed: int
 
   targets_list:
-    type: File[]
+    type: File
 
   baits_list:
-    type: File[]
+    type: File
 
 outputs:
   dir_bams:

@@ -96,6 +96,9 @@ inputs:
   baits_list:
     type: File?
 
+  msisensor_list:
+    type: File
+
 outputs:
   dir_bams:
     type: Directory
@@ -132,6 +135,7 @@ steps:
       tumor_id: 
         valueFrom: $(inputs.tumor_sample.ID)
       facets_params: facets_params
+      msisensor_list: msisensor_list
     out: [ dir_somatic ]
     run: tempo_somatic/run_somatic.cwl 
 

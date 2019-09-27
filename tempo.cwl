@@ -90,6 +90,13 @@ inputs:
         ggplot2: string
         seed: int
 
+  delly_params:
+    type:
+      type: record
+      fields:
+        svtype: string[]
+        delly_exclude: File
+
   targets_list:
     type: File?
 
@@ -128,13 +135,18 @@ steps:
 
   run_somatic:
     in:
+      reference_sequence: reference_sequence
       tumor_bam: run_make_bams_and_qc/tumor_bam
       normal_bam: run_make_bams_and_qc/normal_bam
       facets_vcf: facets_vcf
       tumor_sample: tumor_sample
+      normal_sample: normal_sample
       tumor_id: 
         valueFrom: $(inputs.tumor_sample.ID)
+      normal_id: 
+        valueFrom: $(inputs.normal_sample.ID)
       facets_params: facets_params
+      delly_params: delly_params
       msisensor_list: msisensor_list
     out: [ dir_somatic ]
     run: tempo_somatic/run_somatic.cwl 

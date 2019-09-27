@@ -1,102 +1,80 @@
-{
-    'targets_bed': { 'class': 'File',
-                     'path': '/path/to/optional/file.bed.gz',
-                     'secondaryFiles': [ { 'class': 'File',
-                                           'path':'/path/to/optional/file.bed.gz.tbi'
-                                       } ]
-                   },
-    'known_sites': [   {   'class': 'File',
-                           'path': '/path/to/known_sites.1.vcf',
-                           'secondaryFiles': [   {   'class': 'File',
-                                                     'path': '/path/to/known_sites.1.vcf.idx'}]},
-                       {   'class': 'File',
-                           'path': '/path/to/known_sites.2.vcf',
-                           'secondaryFiles': [   {   'class': 'File',
-                                                     'path': '/path/to/known_sites.2.vcf.idx'}]}],
-    'normal_sample': {   'CN': 'MSKCC',
-                         'ID': 'foo_normal',
-                         'LB': 'foo_normal_1',
-                         'PL': 'Illumina',
-                         'PU': ['foo_normal_1-foo_normal'],
-                         'R1': [   {   'class': 'File',
-                                       'path': '/path/to/R1.fastq.gz'}],
-                         'R2': [   {   'class': 'File',
-                                       'path': '/path/to/R2.fastq.gz'}],
-                         'RG_ID': ['foo_normal_1-foo_normalPE'],
-                         'adapter': 'AGATCGGAAGAGCACACGTCTGAACTCCAGTCACATGAGCATCTCGTATGCCGTCTTCTGCTTG',
-                         'adapter2': 'AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGTAGATCTCGGTGGTCGCCGTATCATT',
-                         'bwa_output': 'foo_normal.bam'},
-    'reference_sequence': {   'class': 'File',
-                              'path': '/path/to/ref.fasta',
-                              'secondaryFiles': [   {   'class': 'File',
-                                                        'path': '/path/to/ref.fasta.amb'},
-                                                    {   'class': 'File',
-                                                        'path': '/path/to/ref.fasta.ann'},
-                                                    {   'class': 'File',
-                                                        'path': '/path/to/ref.fasta.bwt'},
-                                                    {   'class': 'File',
-                                                        'path': '/path/to/ref.fasta.fai'},
-                                                    {   'class': 'File',
-                                                        'path': '/path/to/ref.fasta.pac'},
-                                                    {   'class': 'File',
-                                                        'path': '/path/to/ref.fasta.sa'},
-                                                    {   'class': 'File',
-                                                        'path': '/path/to/ref.dict'}]},
-    'tumor_sample': {   'CN': 'MSKCC',
-                        'ID': 'foo_tumor',
-                        'LB': 'foo_tumor_1',
-                        'PL': 'Illumina',
-                        'PU': ['foo_tumor_1-foo_tumor'],
-                        'R1': [   {   'class': 'File',
-                                      'path': '/path/to/R1.fastq.gz'}],
-                        'R2': [   {   'class': 'File',
-                                      'path': '/path/to/R2.fastq.gz'}],
-                        'RG_ID': ['foo_tumor_1-foo_tumorPE'],
-                        'adapter': 'AGATCGGAAGAGCACACGTCTGAACTCCAGTCACATGAGCATCTCGTATGCCGTCTTCTGCTTG',
-                        'adapter2': 'AGATCGGAAGAGCGTCGTGTAGGGAAAGAGTGTAGATCTCGGTGGTCGCCGTATCATT',
-                        'bwa_output': 'foo_tumor.bam'},
-    'facets_params': {   'pseudo_snps': 50,
-                         'count_orphans': true,
-                         'gzip': true,
-                         'ignore_overlaps': false,
-                         'max_depth': 4000,
-                         'min_base_quality': 0,
-                         'min_read_counts': 0,
-                         'min_map_quality': 0,
-                         'cval': 100,
-                         'snp_nbhd': 250,
-                         'ndepth': 25,
-                         'min_nhet': 25,
-                         'purity_cval': 500,
-                         'purity_snp_nbhd': 250,
-                         'purity_ndepth': 35,
-                         'purity_min_nhet': 25,
-                         'genome': 'hg19',
-                         'directory': '.',
-                         'R_lib': '/usr/lib/R/library',
-                         'single_chrom': 'F',
-                         'ggplot2': 'T',
-                         'seed': 100
-                     },
-    'facets_vcf': {
-      'class': 'File',
-      'path': '/ifs/depot/pi/resources/genomes/GRCh37/facets_snps/dbsnp_137.b37__RmDupsClean__plusPseudo50__DROP_SORT.vcf',
-      'secondaryFiles': [
-          {
-            'class': 'File',
-            'path': '/ifs/depot/pi/resources/genomes/GRCh37/facets_snps/dbsnp_137.b37__RmDupsClean__plusPseudo50__DROP_SORT.vcf.gz'
-        }
-        ]
-      },
-    # optional; used for WES runs by Alfred
-    'target_bed': {'class': 'File',
-             'path': '/path/to/optional/bed.file',
-             'secondaryFiles': [ { 'class': 'File',
-                                   'path': '/path/to/optional/bed.file.tbi' }
-             },
-     # optional; if not provided, hsmetrics will not execute
-    'targets_list': { 'class': 'File', 
-                        'path': '/path/to/optional/targets.interval_list.file'},
-    'baits_list': { 'class': 'File',
-                        'path': '/path/to/optional/baits.interval_list.file'}
-}
+baits_list: null
+delly_params:
+    delly_exclude:
+        class: File
+        path: default/file/path
+    svtype:
+      - default_string
+facets_params:
+    R_lib: default_string
+    count_orphans: false
+    cval: 0
+    directory: default_string
+    genome: default_string
+    ggplot2: default_string
+    gzip: false
+    ignore_overlaps: false
+    max_depth: 0
+    min_base_quality: 0
+    min_map_quality: 0
+    min_nhet: 0
+    min_read_counts: 0
+    ndepth: 0
+    pseudo_snps: 0
+    purity_cval: 0
+    purity_min_nhet: 0
+    purity_ndepth: 0
+    purity_snp_nbhd: 0
+    seed: 0
+    single_chrom: default_string
+    snp_nbhd: 0
+facets_vcf:
+    class: File
+    path: default/file/path
+known_sites:
+  - class: File
+    path: default/file/path
+msisensor_list:
+    class: File
+    path: default/file/path
+normal_sample:
+    CN: default_string
+    ID: default_string
+    LB: default_string
+    PL: default_string
+    PU:
+      - default_string
+    R1:
+      - class: File
+        path: default/file/path
+    R2:
+      - class: File
+        path: default/file/path
+    RG_ID:
+      - default_string
+    adapter: default_string
+    adapter2: default_string
+    bwa_output: default_string
+reference_sequence:
+    class: File
+    path: default/file/path
+target_bed: null
+targets_list: null
+tumor_sample:
+    CN: default_string
+    ID: default_string
+    LB: default_string
+    PL: default_string
+    PU:
+      - default_string
+    R1:
+      - class: File
+        path: default/file/path
+    R2:
+      - class: File
+        path: default/file/path
+    RG_ID:
+      - default_string
+    adapter: default_string
+    adapter2: default_string
+    bwa_output: default_string

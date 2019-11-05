@@ -1,3 +1,6 @@
 [submodule "tempo_make_bam_and_qc"]
 	path = tempo_make_bam_and_qc
 	url = https://github.com/mskcc-cwl/tempo_make_bam_and_qc
+[submodule "tempo_somatic"]
+	path = tempo_somatic
+	url = git@github.com:mskcc-cwl/tempo_somatic
